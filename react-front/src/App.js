@@ -1,12 +1,11 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import "./Navbar.css"
-import Connexion from "./components/Connexion"
-import Acceuil from './components/Acceuil'
-import Panier from './components/Panier'
-import Shop from './components/Shop';
-import Inscription from './components/Inscription';
-import Mdpforget from './components/Mdpforget';
+import Connexion from "./routes/Connexion"
+import Accueil from './routes/Accueil'
+import Panier from './routes/Panier'
+import Shop from './routes/Shop';
+import Inscription from './routes/Inscription';
+import Mdpforget from './routes/Mdpforget';
 import { Route, Routes } from "react-router-dom"
 
 function App() {
@@ -16,7 +15,7 @@ function App() {
       <Navbar/>
         <Routes>
           <Route path="/Connexion" element={<Connexion/>} />
-          <Route path="/Acceuil" element={<Acceuil/>} />
+          <Route path="/Accueil" element={<Accueil/>} />
           <Route path="/Panier" element={<Panier/>} />
           <Route path="/Shop" element={<Shop/>} />
           <Route path="/Inscription" element={<Inscription/>} />
