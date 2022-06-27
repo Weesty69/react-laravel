@@ -18,7 +18,6 @@ class UserController extends Controller
             'name' => 'required|max:15',
             'email' => 'required|email|max:60',
             'password' => 'required|max:30',
-            'reset_question' => 'required|max:30',
         ]);
 
         if ($validator->fails()) {
@@ -36,13 +35,11 @@ class UserController extends Controller
                 $user->name = $request->name;
                 $user->email = $request->email;
                 $user->password = Hash::make($request->password);
-                $user->reset_question = $request->reset_question;
                 $token = Str::random(80);
-                $user->session_token = $token;
+                $user->token = $token;
                 $user->save();
                 return response()->json([
-                    'message' => 'account registred',
-                    'token' => $user->session_token,
+                    'token' => $user->token,
                 ]);
             }
         }
@@ -57,30 +54,29 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'error' => $validator->errors()
+                'error' => 'email ou mot de passe incorrect'
             ]);
         } else {
             $user = User::where('email', $request->email)->first();
             if ($user && Hash::check($request->password, $user->password)) {
                 $token = Str::random(80);
-                $user->session_token = $token;
+                $user->token = $token;
                 $user->save();
                 return response()->json([
                     'status' => true,
-                    'token' => $user->session_token
+                    'token' => $user->token
                 ]);
             } else {
                 return response()->json([
-                    'error' => 'email or password incorrect',
+                    'error' => 'email ou mot de passe incorrect',
                 ]);
             }
-            // A FAIRE ne pas pouvoir entrer d'autre donnÃ©es (ex: name dans login alors qu'il n'existe pas pour la connexion)
         }
     }
 
     public function auth($token)
     {
-        $user = User::where('session_token', $token)->first();
+        $user = User::where('token', $token)->first();
         if ($user) {
             return response()->json([
                 'status' => true,
@@ -100,7 +96,7 @@ class UserController extends Controller
 
     public function update(Request $request, $token)
     {
-        $user = User::where('session_token', $token)->first();
+        $user = User::where('token', $token)->first();
 
         if($user) {
             $validator = Validator::make($request->all(), [
@@ -116,35 +112,6 @@ class UserController extends Controller
                 $user->update([
                     'email' => $request->email,
                     'name' => $request->name
-                ]);
-            }
-        }
-    }
-
-    public function updatePassword(Request $request, $token)
-    {
-        $user = User::where('session_token', $token)->first();
-
-        $validator = Validator::make($request->all(), [
-            'old_password' => 'required|max:30',
-            'new_password' => 'required|max:30|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()
-            ]);
-        } else {
-            if (Hash::check($request->old_password, $user->password) && $user) {
-                $user->update([
-                    'password' => Hash::make($request->new_password)
-                ]);
-                return response()->json([
-                    'message' => 'password updated',
-                ]);
-            } else {
-                return response()->json([
-                    'message' => 'wrong old password',
                 ]);
             }
         }
@@ -176,21 +143,21 @@ class UserController extends Controller
     //     }
     // }
 
-    public function destroy($user_token, $id)
-    {
-        $user = User::where('id', $id)->first();
-        $user_token = User::where('session_token', $user_token)->first();
+    // public function destroy($user_token, $id)
+    // {
+    //     $user = User::where('id', $id)->first();
+    //     $user_token = User::where('session_token', $user_token)->first();
 
-        if ($user_token && $user) {
-            $user->delete();
-            return response()->json([
-                'status' => true,
-                'message' => 'Account deleted with success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-            ]);
-        }
-    }
+    //     if ($user_token && $user) {
+    //         $user->delete();
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Account deleted with success'
+    //         ]);
+    //     } else {
+    //         return response()->json([
+    //             'status' => false,
+    //         ]);
+    //     }
+    // }
 }

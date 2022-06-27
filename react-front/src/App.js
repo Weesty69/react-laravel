@@ -7,6 +7,7 @@ import Shop from './routes/Shop';
 import Inscription from './routes/Inscription';
 import Mdpforget from './routes/Mdpforget';
 import { Route, Routes } from "react-router-dom"
+import ProductDetail from './routes/ProductDetail';
 
 function App() {
   return (
@@ -14,12 +15,13 @@ function App() {
     <div className="App">
       <Navbar/>
         <Routes>
-          <Route path="/Connexion" element={<Connexion/>} />
-          <Route path="/Accueil" element={<Accueil/>} />
-          <Route path="/Panier" element={<Panier/>} />
-          <Route path="/Shop" element={<Shop/>} />
-          <Route path="/Inscription" element={<Inscription/>} />
-          <Route path="/Mdpforget" element={<Mdpforget/>} />
+          <Route path="/connexion" element={<Connexion/>} />
+          <Route path="/" element={<Accueil/>} />
+          <Route path="/panier" element={<Panier/>} />
+          <Route path="/shop" element={<Shop/>} />
+          <Route path="/shop/:product" element={<ProductDetail/>} />
+          <Route path="/inscription" element={<Inscription/>} />
+          <Route path="/motdepasseoublie" element={<Mdpforget/>} />
         </Routes>
         
     </div>

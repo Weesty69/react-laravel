@@ -1,6 +1,7 @@
 function Panier () {
     return (
-        <div className="Panier">
+        <div className="text-center p-4">
+            <h2>Panier non disponible...</h2>
         </div>
         )
     }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 function Shop () {
@@ -11,15 +12,19 @@ function Shop () {
     })
 
     return (
-        <div className="d-flex p-4 justify-content-center">
+        <div className="d-flex justify-content-center align-items-center row">
             {products.map((item, key) => (
-            <div key={key} className="card d-flex justify-content-center w-25 m-2 text-center">
-                <img src={item.image} alt="" />
-                <h3>{item.album}</h3>
-                <h3>{item.artiste}</h3>
-                <h3>{item.price}</h3>
+            <div key={key} className="card d-flex justify-content-center w-25 m-2 text-left col-lg-2">
+                <div style={{backgroundImage: `url(${item.image})`, width: '100%', height: '300px', backgroundSize: 'cover'}}></div>
+                <h4 className="m-1">{item.album}</h4>
+                <p className="m-1">{item.artiste}</p>
+                <h2 className="m-1">{item.price}€</h2>
+                <div>
+                    <Link to={`${item.id}`} state={{product: item}} className="btn btn-primary m-1">Détail</Link>
+                    <Link to={`${item.id}`} className="btn btn-primary disabled m-1">Ajouter au panier</Link>
+                </div>
             </div>
-        ))}
+            ))}
         </div>
         
     )
