@@ -28,7 +28,7 @@ class UserController extends Controller
             $user_register = User::where('email', $request->email)->first();
             if ($user_register) {
                 return response()->json([
-                    "error" => 'existing account',
+                    "error" => 'Compte déja existant',
                 ]);
             } else {
                 $user = new User;
@@ -39,7 +39,8 @@ class UserController extends Controller
                 $user->token = $token;
                 $user->save();
                 return response()->json([
-                    'token' => $user->token,
+                    "error" => false,
+                    'token' => $user->token
                 ]);
             }
         }
@@ -74,13 +75,12 @@ class UserController extends Controller
         }
     }
 
-    public function auth($token)
+    public function auth(Request $request)
     {
-        $user = User::where('token', $token)->first();
+        $user = User::where('token', $request->token)->first();
         if ($user) {
             return response()->json([
                 'status' => true,
-                'data' => $user,
             ]);
         } else {
             return response()->json([

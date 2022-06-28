@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import * as Cookie from '../functions/Cookie';
 
 function Connexion () {
@@ -8,7 +7,6 @@ function Connexion () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    let navigate = useNavigate();
 
 
     const submitForm = (e) => {
@@ -22,7 +20,7 @@ function Connexion () {
             } else if (res.data.token) {
                 setError('')
                 Cookie.SetCookie('token', res.data.token, 30)
-                navigate("/shop")
+                window.location.reload();
             }
         })
     }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function Inscrption () {
@@ -10,15 +11,22 @@ function Inscrption () {
     const [repeatpassword, setRPassword] = useState('');
     const [error, setError] = useState('');
 
+    let navigate = useNavigate();
+
+
     const submitForm = (e) => {
         e.preventDefault();
-        if (password == repeatpassword) {
+        if (password == repeatpassword && nom && email && password) {
             axios.post('http://127.0.0.1:8000/api/register', {
                 name: nom,
                 email: email,
                 password: password
-            }).then(res => setError(res.data.error))
-            console.log('envoyé')
+            }).then(res => {
+                setError(res.data.error)
+                if (error == false) {
+                    navigate('/connexion')
+                }
+            })
         } else {
             setError('Mots de passe pas correspondants.')
         }

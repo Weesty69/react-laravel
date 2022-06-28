@@ -1,8 +1,23 @@
-
+import * as Cookie from '../functions/Cookie';
 import logo from '../assets/images/logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Auth } from '../functions/Auth';
 
 function Navbar() {
+
+    const [AuthStatus, setAuthStatus] = useState(false);
+    let navigate = useNavigate();
+
+    useEffect(() => {
+        Auth().then(res => setAuthStatus(res.data.status))
+    }, [])
+
+    const Disconnect = () => {
+        Cookie.deleteCookie();
+        setAuthStatus(false);
+        navigate('/connexion');
+    }
 
 
     return(
@@ -22,12 +37,22 @@ function Navbar() {
                     <li className="nav-item">
                         <Link className="nav-link active" aria-current="page" to="/shop">Shop</Link>
                     </li>
-                    <li className="nav-item">
+                    {AuthStatus == false ? 
+                    <>
+                        <li className="nav-item">
                         <Link className="nav-link active" to="/connexion">Se connecter</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link active" to="/inscription">Inscription</Link>
-                    </li>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link active" to="/inscription">Inscription</Link>
+                        </li>
+                    </>
+                    :
+                    null}
+                    {AuthStatus == false ?
+                    null
+                    :
+                    <button onClick={() => Disconnect()} className='btn btn-danger'>Disconnect</button>
+                    }
                     <li className="nav-item">
                         <Link className="nav-link active" to="/panier"><i className="fa-solid fa-cart-shopping"></i></Link>
                     </li>
