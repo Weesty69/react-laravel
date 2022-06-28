@@ -9,7 +9,7 @@ function Shop () {
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/products')
         .then(res => setProducts(res.data[0]))
-    })
+    },[])
 
     return (
         <div className="d-flex justify-content-center align-items-center row">
