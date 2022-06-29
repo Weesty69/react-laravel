@@ -18,7 +18,7 @@ function Navbar() {
     const Disconnect = () => {
         Cookie.deleteCookie();
         setAuthStatus(false);
-        navigate('/connexion');
+        window.location.reload();
     }
 
 

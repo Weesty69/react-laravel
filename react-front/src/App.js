@@ -6,7 +6,7 @@ import Panier from './routes/Panier';
 import Shop from './routes/Shop';
 import Inscription from './routes/Inscription';
 import Mdpforget from './routes/Mdpforget';
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import ProductDetail from './routes/ProductDetail';
 import ProtectedRoute from './functions/ProtectedRoute';
 import ProtectedAuth from './functions/ProtectedAuth';
@@ -34,6 +34,7 @@ function App() {
           <Route path="/shop" element={<Shop/>} />
           <Route path="/shop/:product" element={<ProductDetail/>} />
           <Route path="/motdepasseoublie" element={<Mdpforget/>} />
+          <Route path="*" element={<h2 className='text-center m-4'>Page non trouvée <Link to="/">Retour à l'accueil</Link></h2>} />
         </Routes>
         
     </div>
