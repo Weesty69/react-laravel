@@ -1,15 +1,16 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import Connexion from "./routes/Connexion"
-import Accueil from './routes/Accueil'
-import Panier from './routes/Panier'
+import Connexion from "./routes/Connexion";
+import Accueil from './routes/Accueil';
+import Panier from './routes/Panier';
 import Shop from './routes/Shop';
 import Inscription from './routes/Inscription';
 import Mdpforget from './routes/Mdpforget';
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom";
 import ProductDetail from './routes/ProductDetail';
 import ProtectedRoute from './functions/ProtectedRoute';
 import ProtectedAuth from './functions/ProtectedAuth';
+import Admin from './routes/panel/admin';
 
 function App() {
 
@@ -19,6 +20,9 @@ function App() {
     <div className="App">
       <Navbar/>
         <Routes>
+
+          <Route path="/admin" element={<ProtectedRoute><Admin/></ProtectedRoute>} />
+
           <Route path="/connexion" element={<ProtectedAuth><Connexion/></ProtectedAuth>} />
           <Route path="/inscription" element={<ProtectedAuth><Inscription/></ProtectedAuth>} />
           <Route path="/" element={<Accueil/>} />

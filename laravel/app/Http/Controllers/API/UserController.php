@@ -89,6 +89,27 @@ class UserController extends Controller
         }
     }
 
+    public function authAdmin(Request $request)
+    {
+        $user = User::where('token', $request->token)->first();
+        if ($user) {
+            if ($user->role == 1) {
+                return response()->json([
+                    'status' => true,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                ]);
+            }
+            
+        } else {
+            return response()->json([
+                'status' => false,
+            ]);
+        }
+    }
+
     public function show(User $user)
     {
         //

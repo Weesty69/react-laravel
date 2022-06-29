@@ -2,15 +2,17 @@ import * as Cookie from '../functions/Cookie';
 import logo from '../assets/images/logo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Auth } from '../functions/Auth';
+import { Auth, AuthAdmin } from '../functions/Auth';
 
 function Navbar() {
 
     const [AuthStatus, setAuthStatus] = useState(false);
+    const [Admin, setAdmin] = useState(false);
     let navigate = useNavigate();
 
     useEffect(() => {
         Auth().then(res => setAuthStatus(res.data.status))
+        AuthAdmin().then(res => setAdmin(res.data.status))
     }, [])
 
     const Disconnect = () => {
@@ -48,6 +50,7 @@ function Navbar() {
                     </>
                     :
                     null}
+                    
                     {AuthStatus == false ?
                     null
                     :
@@ -56,6 +59,12 @@ function Navbar() {
                     <li className="nav-item">
                         <Link className="nav-link active" to="/panier"><i className="fa-solid fa-cart-shopping"></i></Link>
                     </li>
+                    {Admin == true ?
+                    <li className="nav-item">
+                        <Link className='nav-link' to="/admin">Admin</Link>
+                    </li>
+                    :
+                    null}
                     </ul>
                 </div>
                 </div>

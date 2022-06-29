@@ -4,7 +4,7 @@ import logo from '../assets/images/logo.png'
 function Accueil () {
     return (
         
-      <>
+      <main>
         <section id="accueil" className="d-flex justify-content-center w-100">
         <div className="w-50 d-flex justify-content-center align-items-center">
           <img src={logo} alt=""  width="50%"/>
@@ -25,7 +25,7 @@ function Accueil () {
             </p>
         </div>
       </section>
-      </>
+      </main>
         )
     }
     export default Accueil;
