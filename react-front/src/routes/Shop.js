@@ -12,19 +12,23 @@ function Shop () {
     },[])
 
     return (
-        <div className="d-flex justify-content-center align-items-center row">
-            {products.map((item, key) => (
-            <div key={key} className="card d-flex justify-content-center w-25 m-2 text-left col-lg-2">
-                <div style={{backgroundImage: `url(${item.image})`, width: '100%', height: '300px', backgroundSize: 'cover'}}></div>
-                <h4 className="m-1">{item.album}</h4>
-                <p className="m-1">{item.artiste}</p>
-                <h2 className="m-1">{item.price}€</h2>
-                <div>
-                    <Link to={`${item.id}`} state={{product: item}} className="btn btn-primary m-1">Détail</Link>
-                    <Link to={`${item.id}`} className="btn btn-primary disabled m-1">Ajouter au panier</Link>
-                </div>
-            </div>
-            ))}
+        <div className="d-flex justify-content-evenly align-items-center container">
+            {products.length > 0 ?
+                products.map((item, key) => (
+                    <div key={key} className="card d-flex justify-content-center m-2 text-left" style={{width:"18rem"}}>
+                        <div style={{backgroundImage: `url(${item.image})`, width: '100%', height: '300px', backgroundSize: 'cover', backgroundPosition: 'center'}}></div>
+                        <h4 className="m-1">{item.album}</h4>
+                        <p className="m-1">{item.artiste}</p>
+                        <h2 className="m-1">{item.price}€</h2>
+                        <div>
+                            <Link to={`${item.id}`} state={{product: item}} className="btn btn-primary m-1">Détail</Link>
+                            <Link to={`${item.id}`} className="btn btn-primary disabled m-1">Ajouter au panier</Link>
+                        </div>
+                    </div>
+                ))
+                :
+                    <h2 className="m-5">Pas de produits pour le moment, revenez plus tard...</h2>
+            }
         </div>
         
     )

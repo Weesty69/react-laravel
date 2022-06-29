@@ -26,5 +26,8 @@ Route::get('products', [ProductController::class, 'index']);
 Route::post('authchecker', [UserController::class, 'auth']);
 Route::post('authadmin', [UserController::class, 'authAdmin']);
 Route::post('products', [ProductController::class, 'store']);
+Route::post('edit', [ProductController::class, 'update']);
+Route::post('add', [ProductController::class, 'store']);
+Route::post('delete', [ProductController::class, 'destroy']);
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);

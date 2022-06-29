@@ -10,6 +10,8 @@ import { Route, Routes } from "react-router-dom";
 import ProductDetail from './routes/ProductDetail';
 import ProtectedRoute from './functions/ProtectedRoute';
 import ProtectedAuth from './functions/ProtectedAuth';
+import EditProduct from './routes/panel/EditProduct';
+import AddProduct from './routes/panel/AddProduct';
 import Admin from './routes/panel/admin';
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
         <Routes>
 
           <Route path="/admin" element={<ProtectedRoute><Admin/></ProtectedRoute>} />
+          <Route path="/admin/edit/:id" element={<ProtectedRoute><EditProduct/></ProtectedRoute>} />
+          <Route path="/admin/add" element={<ProtectedRoute><AddProduct/></ProtectedRoute>} />
 
           <Route path="/connexion" element={<ProtectedAuth><Connexion/></ProtectedAuth>} />
           <Route path="/inscription" element={<ProtectedAuth><Inscription/></ProtectedAuth>} />

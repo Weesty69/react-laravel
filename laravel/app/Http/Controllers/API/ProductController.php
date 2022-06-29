@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -35,12 +36,25 @@ class ProductController extends Controller
             'album' => 'required|max:255',
             'artiste' => 'required|max:255',
             'price' => 'required|max:255',
-            //'image' => 'required|max:255',
+            'image' => 'required|max:255',
         ]);
 
         if ($validation->fails()) {
             return response()->json([
-                'error' => $validation->errors()
+                'success' => false,
+                'message' => 'Erreur, Vérifiez les champs .'
+            ]);
+        } else {
+            $product = new Product;
+            $product->album = $request->album;
+            $product->artiste = $request->artiste;
+            $product->price = $request->price;
+            $product->image = $request->image;
+            $product->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Produit bien ajouté .'
             ]);
         }
     }
@@ -63,9 +77,28 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
-        //
+        $product = Product::where('id', $request->id)->first();
+        $user = User::where('token', $request->token)->first();
+
+        if ($user && $product) {
+            $product->album = $request->album;
+            $product->artiste = $request->artiste;
+            $product->price = $request->price;
+            $product->image = $request->image;
+            $product->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Produit mis à jour'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur, produit non trouvé ou session invalide .'
+            ]);
+        }
     }
 
     /**
@@ -74,8 +107,23 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request)
     {
-        //
+        $product = Product::where('id', $request->id)->first();
+        $user = User::where('token', $request->token)->first();
+
+        if ($user && $product) {
+            $product->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Produit Supprimé'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur, produit non trouvé ou session invalide .'
+            ]);
+        }
     }
 }

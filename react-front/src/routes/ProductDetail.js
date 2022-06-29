@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 
-function ProductDetail ({item}) {
+function ProductDetail () {
 
     let location = useLocation();
     const product = location.state.product;
