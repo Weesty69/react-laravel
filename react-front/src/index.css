@@ -38,3 +38,10 @@ code {
   display: flex;
   justify-content: end;
 }
+
+@media (max-width: 1000px) {
+
+  #right-content {
+    display: none;
+  }
+}

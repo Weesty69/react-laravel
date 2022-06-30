@@ -1,7 +1,7 @@
 function Mdpforget () {
     return (
         <div className="Mdpfroget">
-            <h1>Ta oublier ton mdp fdp juif</h1>
+            <h1>Mot de passe oublié</h1>
         </div>
         )
     }

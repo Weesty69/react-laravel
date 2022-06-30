@@ -1,4 +1,4 @@
-import './App.css';
+import './index.css';
 import Navbar from './components/Navbar';
 import Connexion from "./routes/Connexion";
 import Accueil from './routes/Accueil';
